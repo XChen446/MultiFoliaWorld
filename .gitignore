@@ -21,9 +21,6 @@ target/
 *.ear
 *.class
 
-# Config files (except examples)
-config/worlds.json
-config/
 
 # Logs
 *.log

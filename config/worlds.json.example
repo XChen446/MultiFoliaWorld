@@ -1,0 +1,62 @@
+{
+  "comment": "世界配置文件。如果启用的世界总数超过3个，会自动启用突破模式",
+  "comment2": "提示：设置 createDims: true 可以自动创建配套的下界和末地维度",
+  "worlds": [
+    {
+      "name": "world",
+      "environment": "NORMAL",
+      "enabled": true,
+      "structures": true,
+      "seed": null,
+      "comment": "主世界 - 必须启用"
+    },
+    {
+      "name": "world_nether",
+      "environment": "NETHER",
+      "enabled": true,
+      "structures": true,
+      "comment": "下界 - 设置enabled: false可以禁用"
+    },
+    {
+      "name": "world_the_end",
+      "environment": "THE_END",
+      "enabled": false,
+      "structures": true,
+      "comment": "末地 - 已禁用，Folia将看不到这个文件夹"
+    },
+    {
+      "name": "creative",
+      "environment": "NORMAL",
+      "enabled": true,
+      "createDims": false,
+      "structures": false,
+      "seed": 12345,
+      "generator": null,
+      "comment": "第4个世界 - 创造世界（需要maxWorlds > 3才能加载）"
+    },
+    {
+      "name": "mining_world",
+      "environment": "NORMAL",
+      "enabled": true,
+      "createDims": false,
+      "structures": true,
+      "comment": "第5个世界 - 挖矿世界（需要maxWorlds > 3才能加载）"
+    },
+    {
+      "name": "survival2",
+      "environment": "NORMAL",
+      "enabled": true,
+      "createDims": true,
+      "structures": true,
+      "comment": "成对维度示例 - 会自动创建 survival2_nether 和 survival2_the_end"
+    },
+    {
+      "name": "old_survival",
+      "environment": "NORMAL",
+      "enabled": false,
+      "structures": true,
+      "comment": "禁用的世界示例 - 文件夹仍然存在但不会被加载"
+    }
+  ]
+}
+
