@@ -1,0 +1,106 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.virgil'
+version = '1.0-SNAPSHOT'
+
+// 所有子项目的通用配置
+subprojects {
+    apply plugin: 'java'
+    
+    group = rootProject.group
+    version = rootProject.version
+    
+    repositories {
+        mavenCentral()
+        maven {
+            name = "papermc-repo"
+            url = "https://repo.papermc.io/repository/maven-public/"
+        }
+    }
+    
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+    
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release.set(21)
+    }
+}
+
+// 根项目任务：构建所有模块
+task buildAll {
+    dependsOn ':agent:shadowJar', ':plugin:shadowJar'
+    
+    doLast {
+        // 创建 target 目录
+        def targetDir = file('target')
+        targetDir.mkdirs()
+        
+        // 复制 Agent JAR
+        def agentJar = file('modules/agent/build/libs/MultiFoliaWorldAgent.jar')
+        def pluginJar = file('modules/plugin/build/libs/MultiFoliaWorldPlugin.jar')
+        
+        if (agentJar.exists()) {
+            copy {
+                from agentJar
+                into targetDir
+            }
+        }
+        
+        if (pluginJar.exists()) {
+            copy {
+                from pluginJar
+                into targetDir
+            }
+        }
+        
+        // 复制配置示例
+        copy {
+            from 'config/worlds.json.example'
+            into targetDir
+        }
+        
+               // 复制文档
+               copy {
+                   from 'README.md', 'DEPLOY.md', 'OPTIMIZATION.md', 'TROUBLESHOOTING.md', 'IMPLEMENTATION.md', 'WORLD_LIMIT_BYPASS.md'
+                   into targetDir
+               }
+        
+        println ""
+        println "=========================================="
+        println "  MultiFoliaWorld 构建完成"
+        println "=========================================="
+        println "  构建产物已复制到: target/"
+        println ""
+        println "  ✓ MultiFoliaWorldAgent.jar"
+        println "  ✓ MultiFoliaWorldPlugin.jar"
+        println "  ✓ worlds.json.example"
+        println "  ✓ README.md"
+        println "  ✓ DEPLOY.md"
+        println "  ✓ OPTIMIZATION.md"
+        println ""
+        println "部署步骤:"
+        println "  1. 将 MultiFoliaWorldAgent.jar 放到服务器根目录"
+        println "  2. 将 MultiFoliaWorldPlugin.jar 放到 plugins/ 目录"
+        println "  3. 启动时添加参数: -javaagent:MultiFoliaWorldAgent.jar"
+        println "  4. 在服务器根目录创建 config/worlds.json 配置文件"
+        println "     (或复制 config/worlds.json.example)"
+        println "=========================================="
+    }
+}
+
+// 清理所有模块
+task cleanAll {
+    dependsOn ':agent:clean', ':plugin:clean', ':common:clean'
+    
+    doLast {
+        println "所有模块已清理"
+    }
+}
+
+// 默认任务
+defaultTasks 'buildAll'

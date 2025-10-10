@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.5'
+}
+
+dependencies {
+    // Folia API
+    compileOnly 'dev.folia:folia-api:1.21.8-R0.1-SNAPSHOT'
+    
+    // 依赖common模块
+    implementation project(':common')
+}
+
+shadowJar {
+    archiveFileName = 'MultiFoliaWorldPlugin.jar'
+    
+    // 重定位common模块
+    relocate 'com.google.gson', 'org.virgil.multifoliaworld.libs.gson'
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
+
+jar.enabled = false
+build.dependsOn shadowJar

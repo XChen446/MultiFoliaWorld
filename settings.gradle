@@ -1,0 +1,11 @@
+rootProject.name = 'MultiFoliaWorld'
+
+// 子模块
+include 'agent'
+include 'plugin'
+include 'common'
+
+// 模块目录映射
+project(':agent').projectDir = file('modules/agent')
+project(':plugin').projectDir = file('modules/plugin')
+project(':common').projectDir = file('modules/common')

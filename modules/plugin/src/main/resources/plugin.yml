@@ -1,0 +1,33 @@
+name: MultiFoliaWorld
+version: ${version}
+main: org.virgil.multifoliaworld.plugin.MultiFoliaWorldPlugin
+api-version: '1.21'
+folia-supported: true
+author: Virgil
+description: Folia多世界管理插件
+
+commands:
+  multifoliaworld:
+    description: MultiFoliaWorld主命令
+    aliases: [mfw]
+    usage: /mfw <list|info|tp|reload|help>
+    permission: multifoliaworld.use
+  mfw:
+    description: MultiFoliaWorld主命令（别名）
+    usage: /mfw <list|info|tp|reload|help>
+    permission: multifoliaworld.use
+
+permissions:
+  multifoliaworld.use:
+    description: 使用基本命令
+    default: true
+  multifoliaworld.tp:
+    description: 传送到其他世界
+    default: true
+  multifoliaworld.admin:
+    description: 管理员权限
+    default: op
+    children:
+      multifoliaworld.use: true
+      multifoliaworld.tp: true
+

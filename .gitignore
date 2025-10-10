@@ -1,0 +1,55 @@
+# Gradle
+.gradle/
+build/
+out/
+bin/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+
+# Build outputs
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+# Config files (except examples)
+config/worlds.json
+config/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Minecraft server
+server.properties
+bukkit.yml
+spigot.yml
+paper.yml
+folia.yml
+world/
+world_nether/
+world_the_end/
+plugins/
+logs/
+cache/
+crash-reports/
+libraries/
+versions/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~

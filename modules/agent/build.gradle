@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.5'
+}
+
+dependencies {
+    // 依赖common模块
+    implementation project(':common')
+    
+    // 字节码操作 - Javassist
+    implementation 'org.javassist:javassist:3.30.2-GA'
+    
+    // JSON配置解析
+    implementation 'com.google.code.gson:gson:2.11.0'
+    
+    // Folia API (仅用于类型引用)
+    compileOnly 'dev.folia:folia-api:1.21.8-R0.1-SNAPSHOT'
+}
+
+shadowJar {
+    archiveFileName = 'MultiFoliaWorldAgent.jar'
+    
+    // 重定位以避免冲突
+    relocate 'javassist', 'org.virgil.multifoliaworld.libs.javassist'
+    relocate 'com.google.gson', 'org.virgil.multifoliaworld.libs.gson'
+    
+    manifest {
+        attributes(
+            'Premain-Class': 'org.virgil.multifoliaworld.agent.MultiFoliaWorldAgent',
+            'Agent-Class': 'org.virgil.multifoliaworld.agent.MultiFoliaWorldAgent',
+            'Can-Redefine-Classes': 'true',
+            'Can-Retransform-Classes': 'true',
+            'Boot-Class-Path': 'MultiFoliaWorldAgent.jar'
+        )
+    }
+}
+
+jar.enabled = false
+build.dependsOn shadowJar
+
